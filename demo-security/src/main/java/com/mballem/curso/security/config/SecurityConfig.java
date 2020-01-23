@@ -23,9 +23,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/u/**").hasAuthority("ADMIN")				
 				//acesso medico
 				.antMatchers("/medicos/**").hasAuthority("MEDICO")		
-				.anyRequest().authenticated().and().formLogin()
-				.loginPage("/login").defaultSuccessUrl("/", true).failureUrl("/login-error").permitAll().and().logout()
-				.logoutSuccessUrl("/");
+				.anyRequest().authenticated()
+				.and()
+					.formLogin()
+					.loginPage("/login").defaultSuccessUrl("/", true).failureUrl("/login-error").permitAll()
+				.and()
+					.logout()
+					.logoutSuccessUrl("/")				
+				.and()
+					.exceptionHandling()
+					.accessDeniedPage("/acesso-negado");
 	}
 
 	@Override
