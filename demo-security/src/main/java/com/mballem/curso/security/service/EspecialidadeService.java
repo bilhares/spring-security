@@ -28,7 +28,6 @@ public class EspecialidadeService {
 		repository.save(especialidade);
 	}
 
-	
 	@Transactional(readOnly = true)
 	public Map<String, Object> buscarEspecialidades(HttpServletRequest req) {
 		datatables.setRequest(req);
@@ -37,6 +36,16 @@ public class EspecialidadeService {
 		Page<?> page = datatables.getSearch().isEmpty() ? repository.findAll(datatables.getPageable())
 				: repository.findAllByTitulo(datatables.getSearch(), datatables.getPageable());
 		return datatables.getResponse(page);
+	}
+
+	@Transactional(readOnly = true)
+	public Especialidade buscarPorId(Long id) {
+		return repository.findById(id).get();
+	}
+
+	@Transactional(readOnly = false)
+	public void remover(Long id) {
+		repository.deleteById(id);
 	}
 
 }
